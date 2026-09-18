@@ -1,2 +1,2 @@
-mlflow
-scikit-learn
+mlflow==3.16.0
+scikit-learn==1.9.1
