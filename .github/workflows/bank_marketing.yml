@@ -1,0 +1,32 @@
+name: Bank Marketing - Train & Compare CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/bank_marketing/**'
+      - 'data/bank_marketing/**'
+      - '.github/workflows/bank_marketing.yml'
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r src/bank_marketing/requirements.txt
+
+      - name: Run training script (valores por defecto)
+        run: |
+          python src/bank_marketing/bank_marketing_train.py
