@@ -6,8 +6,7 @@ juntos en la raiz, junto con los demas ejercicios del curso):
     python src/bank_marketing/bank_marketing_train.py
     python src/bank_marketing/bank_marketing_train.py --seed 7 --xgb-max-depth 6 --xgb-n-estimators 500
 
-Sin argumentos, corre con los valores por defecto (los mismos usados en
-Notebook_Baseline_BecerrilDiego.ipynb). Cada corrida (Logistic Regression y XGBoost)
+Sin argumentos, corre con los valores por defecto. Cada corrida (Logistic Regression y XGBoost)
 se registra como un run separado en MLflow, bajo el mismo experimento, con:
 hiperparametros (log_param), metricas de CV y de test (log_metric), una matriz de
 confusion (log_artifact) y el modelo entrenado (mlflow.sklearn.log_model).
@@ -59,12 +58,7 @@ CATEGORICAL_FEATURES = [
     "contact", "month", "day_of_week", "poutcome", "pdays_bucket", "age_bin",
 ]
 
-# Tracking 100% local (sqlite + archivos), sin depender de un servidor/tunel externo.
-# Se comparte el mismo mlflow.db de la raiz del repo (usado tambien por el ejemplo
-# de Iris en src/train.ipynb), cada quien bajo su propio nombre de experimento.
-# Para ver los resultados: mlflow ui --backend-store-uri sqlite:///mlflow.db (desde la raiz del repo)
-# Se puede sobreescribir con la variable de entorno MLFLOW_TRACKING_URI si se quiere
-# apuntar a otro backend (por ejemplo, un servidor mlflow remoto).
+
 DEFAULT_TRACKING_URI = f"sqlite:///{(REPO_ROOT / 'mlflow.db').as_posix()}"
 MLFLOW_EXPERIMENT_NAME = "bank_marketing_lr_vs_xgb"
 
@@ -165,8 +159,7 @@ def construir_pipelines(seed, lr_c, xgb_max_depth, xgb_n_estimators, xgb_learnin
         )),
     ])
 
-    # scale_pos_weight y reg_lambda quedan fijos (no son parte de los 3+ hiperparametros
-    # expuestos por CLI), ajustados manualmente en Prueba.ipynb.
+    # scale_pos_weight y reg_lambda quedan fijos.
     pipe_xgb = ImbPipeline([
         ("preprocess", preprocess_xgb),
         ("model", XGBClassifier(
@@ -228,10 +221,11 @@ def entrenar_y_registrar(nombre, pipe, X_train, y_train, X_test, y_test, cv, sco
             mlflow.log_artifact(str(fig_path))
         plt.close(fig)
 
-        # Modelo versionado con su firma de entrada/salida
+        # Modelo versionado con su firma de entrada/salida (nombre = tipo de modelo,
+        # en vez del generico "model", para distinguirlos en la vista de Logged Models)
         signature = infer_signature(X_test, y_pred)
         mlflow.sklearn.log_model(
-            pipe, name="model", signature=signature, input_example=X_test.head(),
+            pipe, name=nombre, signature=signature, input_example=X_test.head(),
             serialization_format="cloudpickle",
         )
 

@@ -1,0 +1,50 @@
+artifact_path: file:C:/Users/diego/AppData/Local/MNA_MLOps_Diego/mlruns/2/models/m-b2590f387767467ebbed36e6a72813ac/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.15
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+    skops_trusted_types: null
+is_signature_from_type_hint: false
+mlflow_version: 3.16.1
+model_id: m-b2590f387767467ebbed36e6a72813ac
+model_size_bytes: 494499
+model_uuid: m-b2590f387767467ebbed36e6a72813ac
+prompts: null
+run_id: 49cd180f5d7b4108b6622dc538bd9e92
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "long", "name": "age", "required": true}, {"type": "string",
+    "name": "job", "required": true}, {"type": "string", "name": "marital", "required":
+    true}, {"type": "string", "name": "education", "required": true}, {"type": "string",
+    "name": "default", "required": true}, {"type": "string", "name": "housing", "required":
+    true}, {"type": "string", "name": "loan", "required": true}, {"type": "string",
+    "name": "contact", "required": true}, {"type": "string", "name": "month", "required":
+    true}, {"type": "string", "name": "day_of_week", "required": true}, {"type": "long",
+    "name": "campaign", "required": true}, {"type": "double", "name": "pdays", "required":
+    false}, {"type": "long", "name": "previous", "required": true}, {"type": "string",
+    "name": "poutcome", "required": true}, {"type": "double", "name": "emp.var.rate",
+    "required": true}, {"type": "double", "name": "cons.price.idx", "required": true},
+    {"type": "double", "name": "cons.conf.idx", "required": true}, {"type": "double",
+    "name": "euribor3m", "required": true}, {"type": "double", "name": "nr.employed",
+    "required": true}, {"type": "long", "name": "contactado_antes", "required": true},
+    {"type": "string", "name": "pdays_bucket", "required": true}, {"type": "long",
+    "name": "poutcome_success", "required": true}, {"type": "string", "name": "age_bin",
+    "required": true}, {"type": "long", "name": "contactos_totales", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-10-12 02:13:12.321373'
